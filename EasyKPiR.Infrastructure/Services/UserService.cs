@@ -1,14 +1,11 @@
-﻿
-using System.Text;
+﻿using System.Text;
 using EasyKPiR.Application.DTOs;
 using EasyKPiR.Application.Interfaces;
-using System.Security.Cryptography;
 using EasyKPiR.Infrastructure.Auth;
 using EasyKPiR.Domain.Entities;
 using EasyKPiR.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-
-
+using BCrypt.Net;
 
 namespace EasyKPiR.Infrastructure.Services
     {
@@ -43,12 +40,12 @@ namespace EasyKPiR.Infrastructure.Services
 
         public async Task<string?> LoginAsync(LoginDto dto)
             {
-            var hash = HashPassword(dto.Password);
-
-            var user = await _db.Users.FirstOrDefaultAsync(u =>
-                u.Email == dto.Email && u.PasswordHash == hash);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
 
             if (user == null)
+                return null;
+
+            if (!VerifyPassword(dto.Password, user.PasswordHash))
                 return null;
 
             return _jwt.GenerateToken(user);
@@ -56,9 +53,12 @@ namespace EasyKPiR.Infrastructure.Services
 
         private static string HashPassword(string password)
             {
-            var bytes = Encoding.UTF8.GetBytes(password);
-            var hash = SHA256.HashData(bytes);
-            return Convert.ToBase64String(hash);
+            return BCrypt.Net.BCrypt.HashPassword(password);
+            }
+
+        private static bool VerifyPassword(string password, string hashedPassword)
+            {
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
             }
         }
     }
