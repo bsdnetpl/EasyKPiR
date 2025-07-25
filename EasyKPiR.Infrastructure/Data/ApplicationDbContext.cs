@@ -23,6 +23,8 @@ namespace EasyKPiR.Infrastructure.Data
         public DbSet<MinimumWage> MinimumWages { get; set; } = default!;
         public DbSet<ZusRate> ZusRates { get; set; } = default!;
         public DbSet<ZusDeclaration> ZusDeclarations { get; set; } = default!;
+        public DbSet<Invoice> Invoices { get; set; } = default!;
+        public DbSet<BusinessOwner> BusinessOwners { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

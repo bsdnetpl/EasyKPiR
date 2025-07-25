@@ -1,8 +1,12 @@
-using EasyKPiR.Application.Interfaces;
+﻿using EasyKPiR.Application.Interfaces;
+using EasyKPiR.Application.Validators;
 using EasyKPiR.Infrastructure.Auth;
 using EasyKPiR.Infrastructure.Data;
 using EasyKPiR.Infrastructure.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -15,6 +19,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+
+// ✅ AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+// Rejestracja walidatorów z całego projektu (np. z Application)
+builder.Services.AddValidatorsFromAssemblyContaining<BusinessOwnerValidator>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -56,6 +70,8 @@ builder.Services.AddAuthorization();
 // DI
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IBusinessOwnerService, BusinessOwnerService>();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -68,6 +84,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+
 
 var app = builder.Build();
 

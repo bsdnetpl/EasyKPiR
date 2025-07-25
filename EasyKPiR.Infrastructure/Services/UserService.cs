@@ -1,11 +1,12 @@
-﻿using System.Text;
+﻿using BCrypt.Net;
 using EasyKPiR.Application.DTOs;
 using EasyKPiR.Application.Interfaces;
-using EasyKPiR.Infrastructure.Auth;
 using EasyKPiR.Domain.Entities;
+using EasyKPiR.Infrastructure.Auth;
 using EasyKPiR.Infrastructure.Data;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using BCrypt.Net;
+using System.Text;
 
 namespace EasyKPiR.Infrastructure.Services
     {
@@ -13,15 +14,21 @@ namespace EasyKPiR.Infrastructure.Services
         {
         private readonly ApplicationDbContext _db;
         private readonly IJwtTokenService _jwt;
+        private readonly IValidator<RegisterDto> _validator;
 
-        public UserService(ApplicationDbContext db, IJwtTokenService jwt)
+        public UserService(ApplicationDbContext db, IJwtTokenService jwt, IValidator<RegisterDto> validator)
             {
             _db = db;
             _jwt = jwt;
+            _validator = validator;
             }
 
         public async Task RegisterAsync(RegisterDto dto)
             {
+            var validationResult = await _validator.ValidateAsync(dto);
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
+
             if (await _db.Users.AnyAsync(u => u.Email == dto.Email))
                 throw new InvalidOperationException("Użytkownik z tym e-mailem już istnieje.");
 
