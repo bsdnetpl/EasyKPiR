@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36310.24 d17.14
+VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKPiR.Api", "EasyKPiR\EasyKPiR.Api.csproj", "{AA9B86DE-D912-4AAB-A6DC-C1283CA9214B}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKPiR.Application", "EasyKPiR.Application\EasyKPiR.Application.csproj", "{D9083440-4E83-4118-A057-6AC31640CD56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKPiR.Infrastructure", "EasyKPiR.Infrastructure\EasyKPiR.Infrastructure.csproj", "{E706D6C9-9261-49CF-BF44-EE61D8C94F3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPiR.Tests", "KPiR.Tests\KPiR.Tests.csproj", "{55516F1B-CFB5-4C1E-BD0C-E780745B8DC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E706D6C9-9261-49CF-BF44-EE61D8C94F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E706D6C9-9261-49CF-BF44-EE61D8C94F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E706D6C9-9261-49CF-BF44-EE61D8C94F3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55516F1B-CFB5-4C1E-BD0C-E780745B8DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55516F1B-CFB5-4C1E-BD0C-E780745B8DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55516F1B-CFB5-4C1E-BD0C-E780745B8DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55516F1B-CFB5-4C1E-BD0C-E780745B8DC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
